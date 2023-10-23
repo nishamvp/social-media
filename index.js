@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 
 import { register } from "./controllers/auth.js";
 import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import verifyToken from "./middleware/auth.js";
 
 // CONFIGURATIONS
@@ -29,7 +30,7 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cookieParser());
+app.use(cookieParser("cookiesecret"));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(cors());
@@ -40,7 +41,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "pubilc/assets");
+    cb(null, "public/assets");
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -50,10 +51,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ROUTES WITH FILES
-app.post("/auth/register", upload.single("picture"),verifyToken,register);
+app.post("/auth/register", upload.single("picture"), register);
 
 // ROUTES
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 // MONGODB
 
