@@ -61,7 +61,6 @@ export const login = async (req, res) => {
       process.env.TOKEN_KEY,
       { expiresIn: "1d" }
     );
-    console.log(token,'in controller')
     res.cookie("jwtoken", token, { httpOnly: true });
     delete user.password;
     res.status(200).json(user);
