@@ -2,7 +2,6 @@ import User from "../models/authModel.js";
 
 export const getUser = async (req, res) => {
   try {
-    console.log(req.user);
     const { id } = req.params;
     const user = await User.findById(id);
     res.status(200).json(user);
