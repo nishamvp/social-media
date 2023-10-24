@@ -11,8 +11,12 @@ import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 
 import { register } from "./controllers/auth.js";
+import { createPost } from "./controllers/post.js";
+
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import postRoutes from "./routes/postRoutes.js";
+
 import verifyToken from "./middleware/auth.js";
 
 // CONFIGURATIONS
@@ -52,10 +56,12 @@ const upload = multer({ storage });
 
 // ROUTES WITH FILES
 app.post("/auth/register", upload.single("picture"), register);
+app.post("/posts", upload.single("picture"), verifyToken, createPost);
 
 // ROUTES
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/posts", postRoutes);
 
 // MONGODB
 
