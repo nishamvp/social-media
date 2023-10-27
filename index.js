@@ -17,6 +17,12 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 
+import User from "./models/authModel.js";
+import Post from "./models/postModel.js";
+
+import { users } from "./data/index.js";
+import { posts } from "./data/index.js";
+
 import verifyToken from "./middleware/auth.js";
 
 // CONFIGURATIONS
@@ -62,6 +68,10 @@ app.post("/posts", upload.single("picture"), verifyToken, createPost);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/posts", postRoutes);
+
+// ADD DATA ONE TIME
+// User.insertMany(users)
+// Post.insertMany(posts)
 
 // MONGODB
 
