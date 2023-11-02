@@ -63,7 +63,7 @@ export const login = async (req, res) => {
     );
     res.cookie("jwtoken", token, { httpOnly: true });
     delete user.password;
-    res.status(200).json(user);
+    res.status(200).json({user,token});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
