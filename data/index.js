@@ -140,6 +140,7 @@ export const users = [
     updatedAt: 1359322268,
     __v: 0,
   },
+  
 ];
 
 export const posts = [
